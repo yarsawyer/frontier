@@ -8,6 +8,7 @@ edition = { workspace = true }
 repository = { workspace = true }
 
 [dependencies]
+hex = "0.4"
 scale-codec = { package = "parity-scale-codec", workspace = true }
 # Substrate
 frame-support = { workspace = true }

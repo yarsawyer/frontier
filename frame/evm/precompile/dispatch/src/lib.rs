@@ -20,6 +20,10 @@
 
 extern crate alloc;
 
+extern crate hex;
+use hex::encode;
+
+
 #[cfg(test)]
 mod mock;
 
@@ -62,12 +66,23 @@ where
 		let input = handle.input();
 		let target_gas = handle.gas_limit();
 		let context = handle.context();
+		
+		sp_runtime::print(&format!("Input data: {}", encode(input)).as_str());
+		
+		let decode_limit = DecodeLimit::get();
+		sp_runtime::print(&format!("Decode limit: {}", decode_limit).as_str());
 
 		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
-			.map_err(|_| PrecompileFailure::Error {
+			.map_err(|err| {
+				sp_runtime::print(&format!("Decode failed: {:?}", err).as_str());
+				PrecompileFailure::Error {
 				exit_status: ExitError::Other("decode failed".into()),
+			}
 			})?;
+
 		let info = call.get_dispatch_info();
+
+		
 
 		if let Some(gas) = target_gas {
 			let valid_weight =
