@@ -17,7 +17,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 #![warn(unused_crate_dependencies)]
--
+
 extern crate alloc;
 
 #[cfg(test)]
@@ -59,7 +59,6 @@ where
 	DecodeLimit: Get<u32>,
 {
 	fn execute(handle: &mut impl PrecompileHandle) -> PrecompileResult {
-		
 		let input = handle.input();
 		let target_gas = handle.gas_limit();
 		let context = handle.context();
