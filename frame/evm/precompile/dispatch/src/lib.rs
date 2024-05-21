@@ -72,7 +72,7 @@ where
 		let decode_limit = DecodeLimit::get();
 		sp_runtime::print(&format!("Decode limit: {}", decode_limit).as_str());
 
-		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &*input)
+		let call = T::RuntimeCall::decode_with_depth_limit(DecodeLimit::get(), &mut &input[2..])
 			.map_err(|err| {
 				sp_runtime::print(&format!("Decode failed: {:?}", err).as_str());
 				PrecompileFailure::Error {
